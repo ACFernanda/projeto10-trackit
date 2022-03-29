@@ -24,12 +24,14 @@ export default function LoginPage() {
 
       <form onSubmit={login}>
         <input
+          required
           type="email"
           placeholder="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
+          required
           type="password"
           placeholder="password"
           value={password}
@@ -52,10 +54,10 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 75vh;
+  margin-top: 25%;
 
   img {
-    width: 60%;
+    height: 30%;
   }
 
   form {
