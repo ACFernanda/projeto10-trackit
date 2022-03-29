@@ -4,10 +4,12 @@ import RegisterPage from "./RegisterPage";
 import HabitsPage from "./HabitsPage";
 import TodayPage from "./TodayPage";
 import HistoryPage from "./HistoryPage";
+import GlobalStyle from "./GlobalStyle";
 
 export default function App() {
   return (
     <BrowserRouter>
+      <GlobalStyle />
       <Routes>
         <Route path="/" element={<LoginPage />}></Route>
         <Route path="/cadastro" element={<RegisterPage />}></Route>
