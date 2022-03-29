@@ -1,3 +1,5 @@
+import Header from "./Header";
+
 export default function HabitsPage() {
-  return "HABITS PAGE";
+  return <Header />;
 }

@@ -1,3 +1,5 @@
+import Header from "./Header";
+
 export default function TodayPage() {
-  return "TODAY PAGE";
+  return <Header />;
 }

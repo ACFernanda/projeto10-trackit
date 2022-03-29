@@ -1,3 +1,5 @@
+import Header from "./Header";
+
 export default function HistoryPage() {
-  return "HISTORY PAGE";
+  return <Header />;
 }

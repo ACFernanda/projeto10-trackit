@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import logo from "../assets/img/Logo.svg";
@@ -9,6 +9,7 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [picture, setPicture] = useState("");
+  const navigate = useNavigate();
 
   function register() {
     const promise = axios.post(
@@ -20,6 +21,13 @@ export default function RegisterPage() {
         password: password,
       }
     );
+
+    promise.then((response) => {
+      const { data } = response;
+      console.log(data);
+      navigate("/");
+    });
+    promise.catch((err) => console.log(err.response));
   }
 
   return (

@@ -1,14 +1,16 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import logo from "../assets/img/Logo.svg";
 
-export default function LoginPage() {
+export default function LoginPage({ saveToken }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  function login() {
+  function login(event) {
+    event.preventDefault();
     const promise = axios.post(
       "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",
       {
@@ -16,6 +18,14 @@ export default function LoginPage() {
         password: password,
       }
     );
+
+    promise.then((response) => {
+      const { data } = response;
+      console.log(data);
+      saveToken(data.token);
+      navigate("/hoje");
+    });
+    promise.catch((err) => alert(err.response));
   }
 
   return (
