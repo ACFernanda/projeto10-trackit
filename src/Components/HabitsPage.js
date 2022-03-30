@@ -1,8 +1,13 @@
 import Header from "./Header";
 import Footer from "./Footer";
 import styled from "styled-components";
+import { useContext } from "react";
+
+import UserContext from "../Contexts/UserContext";
 
 export default function HabitsPage() {
+  const user = useContext(UserContext);
+  console.log(user);
   return (
     <>
       <Header />

@@ -21,9 +21,8 @@ export default function LoginPage({ setUser }) {
     );
 
     promise.then((response) => {
-      const { user } = response;
-      console.log(user);
-      setUser(user);
+      console.log(response.data);
+      setUser(response.data);
       navigate("/hoje");
     });
     promise.catch((err) => {
