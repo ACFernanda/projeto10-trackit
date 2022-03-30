@@ -11,7 +11,8 @@ export default function RegisterPage() {
   const [picture, setPicture] = useState("");
   const navigate = useNavigate();
 
-  function register() {
+  function register(event) {
+    event.preventDefault();
     const promise = axios.post(
       "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up",
       {
@@ -21,7 +22,6 @@ export default function RegisterPage() {
         password: password,
       }
     );
-
     promise.then((response) => {
       const { data } = response;
       console.log(data);
@@ -100,8 +100,16 @@ const Container = styled.div`
     border-radius: 5px;
     font-size: 19.976px;
     line-height: 25px;
-    color: #dbdbdb;
+    color: ##666666;
     margin-bottom: 6px;
+  }
+
+  input:placeholder {
+    color: #dbdbdb;
+  }
+
+  input:disabled {
+    background-color: #f2f2f2;
   }
 
   button {
@@ -114,6 +122,10 @@ const Container = styled.div`
     line-height: 26px;
     text-align: center;
     color: #ffffff;
+  }
+
+  button:disabled {
+    background-color: #52b6ff;
   }
 
   p {

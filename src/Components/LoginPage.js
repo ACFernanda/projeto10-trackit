@@ -4,9 +4,10 @@ import styled from "styled-components";
 import axios from "axios";
 import logo from "../assets/img/Logo.svg";
 
-export default function LoginPage({ saveToken }) {
+export default function LoginPage({ setUser }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [disabled, setDisabled] = useState(false);
   const navigate = useNavigate();
 
   function login(event) {
@@ -20,12 +21,16 @@ export default function LoginPage({ saveToken }) {
     );
 
     promise.then((response) => {
-      const { data } = response;
-      console.log(data);
-      saveToken(data.token);
+      const { user } = response;
+      console.log(user);
+      setUser(user);
       navigate("/hoje");
     });
-    promise.catch((err) => alert(err.response));
+    promise.catch((err) => {
+      console.log(err.response);
+      alert("Erro! :( Tente novamente.");
+      setDisabled(false);
+    });
   }
 
   return (
@@ -39,6 +44,7 @@ export default function LoginPage({ saveToken }) {
           placeholder="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          disabled={disabled}
         />
         <input
           required
@@ -46,8 +52,11 @@ export default function LoginPage({ saveToken }) {
           placeholder="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          disabled={disabled}
         />
-        <button type="submit">Entrar</button>
+        <button onClick={() => setDisabled(true)} type="submit">
+          Entrar
+        </button>
       </form>
 
       <Link to="/cadastro">
@@ -84,8 +93,16 @@ const Container = styled.div`
     border-radius: 5px;
     font-size: 19.976px;
     line-height: 25px;
-    color: #dbdbdb;
+    color: ##666666;
     margin-bottom: 6px;
+  }
+
+  input:placeholder {
+    color: #dbdbdb;
+  }
+
+  input:disabled {
+    background-color: #f2f2f2;
   }
 
   button {
@@ -98,6 +115,10 @@ const Container = styled.div`
     line-height: 26px;
     text-align: center;
     color: #ffffff;
+  }
+
+  button:disabled {
+    background-color: #52b6ff;
   }
 
   p {
