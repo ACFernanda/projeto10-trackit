@@ -3,7 +3,7 @@ import styled from "styled-components";
 export default function WeekDays() {
   const days = ["D", "S", "T", "Q", "Q", "S", "S"];
 
-  return days.map((day) => <Button>{day}</Button>);
+  return days.map((day, index) => <Button key={index}>{day}</Button>);
 }
 
 const Button = styled.button`

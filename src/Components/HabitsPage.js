@@ -9,44 +9,53 @@ import UserContext from "../Contexts/UserContext";
 
 export default function HabitsPage() {
   const user = useContext(UserContext);
+  const [newHabit, setNewHabit] = useState(false);
   return (
     <>
       <Header />
       <Main>
         <Title>
           <p>Meus hábitos</p>
-          <Button>
+          <Button onClick={() => setNewHabit(true)}>
             <span>+</span>
           </Button>
         </Title>
-        <NewHabit />
+        {newHabit === true ? <NewHabit /> : <></>}
         <ListHabits />
       </Main>
       <Footer />
     </>
   );
-}
 
-function NewHabit() {
-  const [title, setTitle] = useState("");
+  function NewHabit() {
+    const [title, setTitle] = useState("");
 
-  return (
-    <AddHabit>
-      <input
-        type="text"
-        placeholder="nome do hábito"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
-      <Week>
-        <WeekDays />
-      </Week>
-      <Submit>
-        <button className="cancel">Cancelar</button>
-        <button className="save">Salvar</button>
-      </Submit>
-    </AddHabit>
-  );
+    return (
+      <AddHabit>
+        <input
+          type="text"
+          placeholder="nome do hábito"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <Week>
+          <WeekDays />
+        </Week>
+        <Submit>
+          <button
+            onClick={() => {
+              setTitle("");
+              setNewHabit(false);
+            }}
+            className="cancel"
+          >
+            Cancelar
+          </button>
+          <button className="save">Salvar</button>
+        </Submit>
+      </AddHabit>
+    );
+  }
 }
 
 const Main = styled.div`
