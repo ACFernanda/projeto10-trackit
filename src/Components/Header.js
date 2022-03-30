@@ -1,13 +1,13 @@
+import { useContext } from "react";
 import styled from "styled-components";
+import UserContext from "../Contexts/UserContext";
 
 export default function Header() {
+  const user = useContext(UserContext);
   return (
     <TopBar>
       <h1>TrackIt</h1>
-      <img
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSZ9se8N-sEQ-LU7cYhO9hWVljFF3eS1vUYQ&usqp=CAU"
-        alt="foto"
-      />
+      <img src={user.image} alt={user.name} />
     </TopBar>
   );
 }
@@ -37,5 +37,6 @@ const TopBar = styled.div`
     width: 51px;
     height: 51px;
     border-radius: 98.5px;
+    object-fit: cover;
   }
 `;

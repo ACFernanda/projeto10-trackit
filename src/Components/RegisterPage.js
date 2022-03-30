@@ -9,6 +9,7 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [picture, setPicture] = useState("");
+  const [disabled, setDisabled] = useState(false);
   const navigate = useNavigate();
 
   function register(event) {
@@ -27,7 +28,11 @@ export default function RegisterPage() {
       console.log(data);
       navigate("/");
     });
-    promise.catch((err) => console.log(err.response));
+    promise.catch((err) => {
+      console.log(err.response);
+      alert("Erro! :( Tente novamente.");
+      setDisabled(false);
+    });
   }
 
   return (
@@ -41,6 +46,7 @@ export default function RegisterPage() {
           placeholder="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          disabled={disabled}
         />
         <input
           required
@@ -48,6 +54,7 @@ export default function RegisterPage() {
           placeholder="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          disabled={disabled}
         />
         <input
           required
@@ -55,6 +62,7 @@ export default function RegisterPage() {
           placeholder="nome"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          disabled={disabled}
         />
         <input
           required
@@ -62,6 +70,7 @@ export default function RegisterPage() {
           placeholder="foto"
           value={picture}
           onChange={(e) => setPicture(e.target.value)}
+          disabled={disabled}
         />
         <button type="submit">Cadastrar</button>
       </form>
@@ -100,7 +109,7 @@ const Container = styled.div`
     border-radius: 5px;
     font-size: 19.976px;
     line-height: 25px;
-    color: ##666666;
+    color: #666666;
     margin-bottom: 6px;
   }
 

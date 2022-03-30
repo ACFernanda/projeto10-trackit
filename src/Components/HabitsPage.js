@@ -1,13 +1,14 @@
 import Header from "./Header";
 import Footer from "./Footer";
+import ListHabits from "./ListHabits";
+import WeekDays from "./WeekDays";
 import styled from "styled-components";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 import UserContext from "../Contexts/UserContext";
 
 export default function HabitsPage() {
   const user = useContext(UserContext);
-  console.log(user);
   return (
     <>
       <Header />
@@ -18,9 +19,33 @@ export default function HabitsPage() {
             <span>+</span>
           </Button>
         </Title>
+        <NewHabit />
+        <ListHabits />
       </Main>
       <Footer />
     </>
+  );
+}
+
+function NewHabit() {
+  const [title, setTitle] = useState("");
+
+  return (
+    <AddHabit>
+      <input
+        type="text"
+        placeholder="nome do hábito"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
+      <Week>
+        <WeekDays />
+      </Week>
+      <Submit>
+        <button className="cancel">Cancelar</button>
+        <button className="save">Salvar</button>
+      </Submit>
+    </AddHabit>
   );
 }
 
@@ -45,7 +70,7 @@ const Title = styled.div`
   }
 `;
 
-const Button = styled.div`
+const Button = styled.button`
   margin-top: 28px;
   width: 40px;
   height: 35px;
@@ -54,9 +79,73 @@ const Button = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  border: none;
 
   span {
     color: #ffffff;
     font-size: 27px;
+  }
+`;
+
+const AddHabit = styled.div`
+  width: 92%;
+  height: 180px;
+  background: #ffffff;
+  border-radius: 5px;
+  margin: 20px auto 29px auto;
+  display: flex;
+  flex-direction: column;
+  padding: 0 19px;
+
+  input {
+    width: 100%;
+    height: 45px;
+    background: #ffffff;
+    border: 1px solid #d5d5d5;
+    box-sizing: border-box;
+    border-radius: 5px;
+    color: #666666;
+    font-size: 20px;
+    font-family: "Lexend Deca";
+    margin-top: 18px;
+  }
+
+  input:placeholder {
+    color: #dbdbdb;
+  }
+`;
+
+const Week = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 8px;
+`;
+
+const Submit = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 32px;
+
+  .cancel {
+    height: 20px;
+    font-family: "Lexend Deca";
+    font-size: 15px;
+    color: #52b6ff;
+    background-color: #ffffff;
+    border: none;
+    margin-right: 10px;
+  }
+
+  .save {
+    width: 84px;
+    height: 35px;
+    background: #52b6ff;
+    border-radius: 4.63636px;
+    font-weight: 400;
+    font-size: 16px;
+    color: #ffffff;
+    border: none;
   }
 `;
