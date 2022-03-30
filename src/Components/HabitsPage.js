@@ -29,6 +29,7 @@ export default function HabitsPage() {
 
   function NewHabit() {
     const [title, setTitle] = useState("");
+    const [selectedDays, setSelectedDays] = useState([]);
 
     return (
       <AddHabit>
@@ -39,7 +40,10 @@ export default function HabitsPage() {
           onChange={(e) => setTitle(e.target.value)}
         />
         <Week>
-          <WeekDays />
+          <WeekDays
+            setSelectedDays={setSelectedDays}
+            selectedDays={selectedDays}
+          />
         </Week>
         <Submit>
           <button
