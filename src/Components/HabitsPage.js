@@ -4,6 +4,7 @@ import ListHabits from "./ListHabits";
 import WeekDays from "./WeekDays";
 import styled from "styled-components";
 import { useContext, useState } from "react";
+import axios from "axios";
 
 import UserContext from "../Contexts/UserContext";
 
@@ -31,6 +32,33 @@ export default function HabitsPage() {
     const [title, setTitle] = useState("");
     const [selectedDays, setSelectedDays] = useState([]);
 
+    function PostNewHabbit() {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+
+      const promise = axios.post(
+        "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
+        {
+          name: title,
+          days: selectedDays,
+        },
+        config
+      );
+
+      promise.then((response) => {
+        console.log(response.data);
+        // navigate("/habitos");
+      });
+      promise.catch((err) => {
+        console.log(err.response);
+        // alert("Erro! :( Tente novamente.");
+        // setDisabled(false);
+      });
+    }
+
     return (
       <AddHabit>
         <input
@@ -55,7 +83,9 @@ export default function HabitsPage() {
           >
             Cancelar
           </button>
-          <button className="save">Salvar</button>
+          <button onClick={PostNewHabbit} className="save">
+            Salvar
+          </button>
         </Submit>
       </AddHabit>
     );
