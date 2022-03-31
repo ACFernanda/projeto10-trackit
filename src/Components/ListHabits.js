@@ -73,10 +73,14 @@ function deleteHabit(id, token) {
   };
   const data = {};
 
-  axios.delete(
-    `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,
-    { headers, data }
-  );
+  const confirm = window.confirm("Deseja deletar o hábito?");
+
+  if (confirm === true) {
+    axios.delete(
+      `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,
+      { headers, data }
+    );
+  }
 
   console.log(id);
 }
