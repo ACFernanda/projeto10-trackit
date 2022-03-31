@@ -11,6 +11,7 @@ import UserContext from "../Contexts/UserContext";
 export default function HabitsPage() {
   const user = useContext(UserContext);
   const [newHabit, setNewHabit] = useState(false);
+  const [habits, setHabits] = useState([]);
   const [render, setRender] = useState(false);
 
   return (
@@ -24,7 +25,7 @@ export default function HabitsPage() {
           </Button>
         </Title>
         {newHabit === true ? <NewHabit /> : <></>}
-        <ListHabits />
+        <ListHabits setHabits={setHabits} habits={habits} />
       </Main>
       <Footer />
     </>
@@ -52,7 +53,7 @@ export default function HabitsPage() {
 
       promise.then((response) => {
         console.log(response.data);
-        // navigate("/habitos");
+        setHabits([...habits, response.data]);
       });
       promise.catch((err) => {
         console.log(err.response);

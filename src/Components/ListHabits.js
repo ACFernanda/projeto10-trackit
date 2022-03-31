@@ -1,13 +1,12 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import styled from "styled-components";
 import trash from "../assets/img/Trash.svg";
 import axios from "axios";
 
 import UserContext from "../Contexts/UserContext";
 
-export default function ListHabits() {
+export default function ListHabits({ habits, setHabits }) {
   const user = useContext(UserContext);
-  const [habits, setHabits] = useState([]);
 
   useEffect(() => {
     const config = {
