@@ -45,7 +45,7 @@ export default function ListHabits() {
 
 function Habit({ habits, token }) {
   return habits.map(({ id, name, days }) => (
-    <HabitCard>
+    <HabitCard key={id}>
       <p className="title">{name}</p>
       <ListDays>
         <Days days={days} />

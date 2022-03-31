@@ -22,7 +22,7 @@ export default function LoginPage({ setUser }) {
 
     promise.then((response) => {
       setUser(response.data);
-      navigate("/habitos");
+      navigate("/hoje");
     });
     promise.catch((err) => {
       console.log(err.response);

@@ -18,8 +18,8 @@ export default function App() {
         <Routes>
           <Route path="/" element={<LoginPage setUser={setUser} />}></Route>
           <Route path="/cadastro" element={<RegisterPage />}></Route>
-          <Route path="/habitos" element={<HabitsPage />}></Route>
           <Route path="/hoje" element={<TodayPage />}></Route>
+          <Route path="/habitos" element={<HabitsPage />}></Route>
           <Route path="/historico" element={<HistoryPage />}></Route>
         </Routes>
       </BrowserRouter>
