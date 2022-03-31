@@ -11,6 +11,7 @@ import UserContext from "../Contexts/UserContext";
 export default function HabitsPage() {
   const user = useContext(UserContext);
   const [newHabit, setNewHabit] = useState(false);
+
   return (
     <>
       <Header />
@@ -76,14 +77,19 @@ export default function HabitsPage() {
         <Submit>
           <button
             onClick={() => {
-              setTitle("");
               setNewHabit(false);
             }}
             className="cancel"
           >
             Cancelar
           </button>
-          <button onClick={PostNewHabbit} className="save">
+          <button
+            onClick={() => {
+              PostNewHabbit();
+              setNewHabit(false);
+            }}
+            className="save"
+          >
             Salvar
           </button>
         </Submit>
