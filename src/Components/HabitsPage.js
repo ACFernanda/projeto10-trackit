@@ -105,7 +105,7 @@ const Title = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 17px;
-
+  margin-bottom: 20px;
   p {
     margin-top: 28px;
     font-size: 22.976px;

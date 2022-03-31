@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { useState } from "react";
 
 export default function WeekDays({ setSelectedDays, selectedDays }) {
   const days = ["D", "S", "T", "Q", "Q", "S", "S"];
