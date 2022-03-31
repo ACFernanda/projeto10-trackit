@@ -25,6 +25,7 @@ const TopBar = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 18px;
+  z-index: 10;
 
   h1 {
     font-family: "Playball";

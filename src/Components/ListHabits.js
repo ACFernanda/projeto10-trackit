@@ -9,7 +9,6 @@ export default function ListHabits() {
   const user = useContext(UserContext);
   const [habits, setHabits] = useState([]);
 
-  // FAZER UM GET DOS HABITOS
   useEffect(() => {
     const config = {
       headers: {
@@ -33,7 +32,7 @@ export default function ListHabits() {
   }, []);
 
   if (habits.length > 0) {
-    return <Habit habits={habits} />;
+    return <Habit habits={habits} token={user.token} />;
   } else {
     return (
       <span>
@@ -44,14 +43,14 @@ export default function ListHabits() {
   }
 }
 
-function Habit({ habits }) {
+function Habit({ habits, token }) {
   return habits.map(({ id, name, days }) => (
     <HabitCard>
       <p className="title">{name}</p>
       <ListDays>
         <Days days={days} />
       </ListDays>
-      <img onClick={() => deleteHabit(id)} src={trash} alt="delete" />
+      <img onClick={() => deleteHabit(id, token)} src={trash} alt="delete" />
     </HabitCard>
   ));
 }
@@ -68,7 +67,17 @@ function Days({ days }) {
   });
 }
 
-function deleteHabit(id) {
+function deleteHabit(id, token) {
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  const data = {};
+
+  axios.delete(
+    `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,
+    { headers, data }
+  );
+
   console.log(id);
 }
 
@@ -80,7 +89,7 @@ const HabitCard = styled.div`
   display: flex;
   flex-direction: column;
   padding: 14px 19px;
-  position: relative:
+  position: absolute:
 
   .title {
     font-family: "Lexend Deca";
@@ -91,8 +100,9 @@ const HabitCard = styled.div`
   img {
     width: 13px;
     heigth: 15px;
-    position: absolute;
-    right: 30px;
+    position: relative;
+    left: 285px;
+    bottom: 52px;
     margin-left: 10px;
   }
 `;

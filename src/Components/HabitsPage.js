@@ -11,6 +11,7 @@ import UserContext from "../Contexts/UserContext";
 export default function HabitsPage() {
   const user = useContext(UserContext);
   const [newHabit, setNewHabit] = useState(false);
+  const [render, setRender] = useState(false);
 
   return (
     <>
@@ -87,6 +88,7 @@ export default function HabitsPage() {
             onClick={() => {
               PostNewHabbit();
               setNewHabit(false);
+              setRender(!render);
             }}
             className="save"
           >
@@ -103,6 +105,7 @@ const Main = styled.div`
   background-color: #e5e5e5;
   height: 100vh;
   font-family: "Lexend Deca";
+  overflow: auto;
 `;
 
 const Title = styled.div`
