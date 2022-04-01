@@ -21,7 +21,7 @@ export default function ListHabits({ habits, setHabits }) {
     );
 
     promise.then((response) => {
-      console.log(response.data); // DEVOLVE UMA ARRAY COM OS HÁBITOS
+      console.log(response.data);
       setHabits(response.data);
     });
 

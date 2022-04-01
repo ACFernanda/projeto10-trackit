@@ -57,7 +57,7 @@ export default function HabitsPage() {
       });
       promise.catch((err) => {
         console.log(err.response);
-        // alert("Erro! :( Tente novamente.");
+        alert("Erro! :( Tente novamente.");
         // setDisabled(false);
       });
     }

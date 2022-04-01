@@ -1,12 +1,33 @@
+import React from "react";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
+
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export default function Footer() {
+  const percentage = 50;
   return (
     <BottomBar>
       <Link to="/habitos">
         <p>Hábitos</p>
       </Link>
+      <div>
+        <Link to="/hoje">
+          <CircularProgressbar
+            value={percentage}
+            text={"Hoje"}
+            background
+            backgroundPadding={6}
+            styles={buildStyles({
+              backgroundColor: "#3e98c7",
+              textColor: "#fff",
+              pathColor: "#fff",
+              trailColor: "transparent",
+            })}
+          />
+        </Link>
+      </div>
       <Link to="/historico">
         <p>Histórico</p>
       </Link>
@@ -34,5 +55,10 @@ const BottomBar = styled.div`
 
   a {
     text-decoration: none;
+  }
+
+  div {
+    width: 30%;
+    margin-bottom: 35px;
   }
 `;
