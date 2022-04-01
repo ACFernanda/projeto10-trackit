@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
@@ -6,7 +7,8 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export default function Footer() {
-  const percentage = 50;
+  const [percentage, setPercentage] = useState(0);
+
   return (
     <BottomBar>
       <Link to="/habitos">

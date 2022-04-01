@@ -34,10 +34,12 @@ export default function ListHabits({ habits, setHabits }) {
     return <Habit habits={habits} token={user.token} setHabits={setHabits} />;
   } else {
     return (
-      <span>
-        Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
-        começar a trackear!
-      </span>
+      <NoHabit>
+        <p>
+          Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
+          começar a trackear!
+        </p>
+      </NoHabit>
     );
   }
 }
@@ -150,4 +152,11 @@ const DaySelected = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+const NoHabit = styled.div`
+  font-family: "Lexend Deca";
+  font-size: 18px;
+  color: #666666;
+  margin: 5px 15px;
 `;
