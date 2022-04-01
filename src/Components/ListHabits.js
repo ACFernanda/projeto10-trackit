@@ -31,7 +31,7 @@ export default function ListHabits({ habits, setHabits }) {
   }, []);
 
   if (habits.length > 0) {
-    return <Habit habits={habits} token={user.token} />;
+    return <Habit habits={habits} token={user.token} setHabits={setHabits} />;
   } else {
     return (
       <span>
@@ -42,14 +42,18 @@ export default function ListHabits({ habits, setHabits }) {
   }
 }
 
-function Habit({ habits, token }) {
+function Habit({ habits, token, setHabits }) {
   return habits.map(({ id, name, days }) => (
     <HabitCard key={id}>
       <p className="title">{name}</p>
       <ListDays>
         <Days days={days} />
       </ListDays>
-      <img onClick={() => deleteHabit(id, token)} src={trash} alt="delete" />
+      <img
+        onClick={() => deleteHabit(id, token, setHabits, habits)}
+        src={trash}
+        alt="delete"
+      />
     </HabitCard>
   ));
 }
@@ -66,7 +70,7 @@ function Days({ days }) {
   });
 }
 
-function deleteHabit(id, token) {
+function deleteHabit(id, token, setHabits, habits) {
   const headers = {
     Authorization: `Bearer ${token}`,
   };
@@ -79,9 +83,9 @@ function deleteHabit(id, token) {
       `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,
       { headers, data }
     );
-  }
 
-  console.log(id);
+    setHabits([...habits].filter((item) => item.id !== id));
+  }
 }
 
 const HabitCard = styled.div`
