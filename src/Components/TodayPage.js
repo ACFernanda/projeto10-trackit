@@ -17,13 +17,21 @@ export default function TodayPage() {
   const weekday = dayjs().locale("pt").format("dddd");
   const shortWeekday = weekday.replace("-feira", "");
 
+  const totalHabits = todayHabits.length;
+  const doneHabits = todayHabits.filter((habit) => habit.done === true);
+  const percentageDone = (doneHabits.length * 100) / totalHabits;
+
   return (
     <>
       <Header />
       <Main>
         <TopInfo>
           {shortWeekday}, {date}
-          <p>Nenhum hábito concluído ainda</p>
+          {percentageDone > 0 ? (
+            <p className="green">{percentageDone}% dos hábitos concluídos</p>
+          ) : (
+            <p>Nenhum hábito concluído ainda</p>
+          )}
         </TopInfo>
         {todayHabits.map((todayHabit) => TodayHabit(todayHabit))}
       </Main>
@@ -107,6 +115,9 @@ const TopInfo = styled.div`
     color: #bababa;
     line-height: 22px;
     margin: 2px 0 28px;
+  }
+  p.green {
+    color: #8fc549;
   }
 `;
 
