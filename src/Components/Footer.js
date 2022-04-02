@@ -8,10 +8,11 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import UserContext from "../Contexts/UserContext";
+import TodayHabitsContext from "../Contexts/TodayHabitsContext";
 
 export default function Footer() {
   const user = useContext(UserContext);
-  const [todayHabits, setTodayHabits] = useState([]);
+  const { todayHabits, setTodayHabits } = useContext(TodayHabitsContext);
 
   useEffect(() => {
     const config = {

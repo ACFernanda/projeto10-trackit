@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import checkmark from "../assets/img/CheckMark.svg";
@@ -8,35 +8,14 @@ import dayjs from "dayjs";
 import "dayjs/locale/pt";
 
 import UserContext from "../Contexts/UserContext";
+import TodayHabitsContext from "../Contexts/TodayHabitsContext";
 
 export default function TodayPage() {
   const user = useContext(UserContext);
-  const [todayHabits, setTodayHabits] = useState([]);
+  const { todayHabits } = useContext(TodayHabitsContext);
   const date = dayjs().locale("pt").format("DD/MM");
   const weekday = dayjs().locale("pt").format("dddd");
   const shortWeekday = weekday.replace("-feira", "");
-
-  useEffect(() => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    };
-
-    const promise = axios.get(
-      `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today`,
-      config
-    );
-
-    promise.then((response) => {
-      console.log(response.data);
-      setTodayHabits(response.data);
-    });
-
-    promise.catch((err) => {
-      console.log(err.response);
-    });
-  }, []);
 
   return (
     <>
