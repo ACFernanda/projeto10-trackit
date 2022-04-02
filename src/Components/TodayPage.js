@@ -87,9 +87,6 @@ export default function TodayPage() {
         config
       );
 
-      promise.then((response) => {
-        console.log(response.data);
-      });
       promise.catch((err) => {
         console.log(err.response);
       });
@@ -107,9 +104,6 @@ export default function TodayPage() {
         config
       );
 
-      promise.then((response) => {
-        console.log(response.data);
-      });
       promise.catch((err) => {
         console.log(err.response);
       });
