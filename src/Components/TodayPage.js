@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import checkmark from "../assets/img/CheckMark.svg";
@@ -11,15 +11,38 @@ import UserContext from "../Contexts/UserContext";
 import TodayHabitsContext from "../Contexts/TodayHabitsContext";
 
 export default function TodayPage() {
+  const [lastUpdate, setLastUpdate] = useState(null);
   const user = useContext(UserContext);
-  const { todayHabits } = useContext(TodayHabitsContext);
+  const { todayHabits, setTodayHabits } = useContext(TodayHabitsContext);
   const date = dayjs().locale("pt").format("DD/MM");
   const weekday = dayjs().locale("pt").format("dddd");
   const shortWeekday = weekday.replace("-feira", "");
 
   const totalHabits = todayHabits.length;
   const doneHabits = todayHabits.filter((habit) => habit.done === true);
-  const percentageDone = (doneHabits.length * 100) / totalHabits;
+  const percentageDone = parseInt((doneHabits.length * 100) / totalHabits);
+
+  useEffect(() => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+
+    const promise = axios.get(
+      `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today`,
+      config
+    );
+
+    promise.then((response) => {
+      console.log(response.data);
+      setTodayHabits(response.data);
+    });
+
+    promise.catch((err) => {
+      console.log(err.response);
+    });
+  }, [lastUpdate]);
 
   return (
     <>
@@ -33,13 +56,15 @@ export default function TodayPage() {
             <p>Nenhum hábito concluído ainda</p>
           )}
         </TopInfo>
-        {todayHabits.map((todayHabit) => TodayHabit(todayHabit))}
+        {todayHabits.map((habit) => (
+          <TodayHabit key={habit.id} habit={habit} />
+        ))}
       </Main>
       <Footer />
     </>
   );
 
-  function TodayHabit(habit) {
+  function TodayHabit({ habit }) {
     return (
       <TodayHabitCard key={habit.id}>
         <h1>{habit.name}</h1>
@@ -48,7 +73,8 @@ export default function TodayPage() {
         <CheckBox
           done={habit.done}
           onClick={(event) => {
-            ToggleDone(habit, event);
+            toggleDone(habit, event);
+            setLastUpdate(Date.now());
           }}
         >
           <img src={checkmark} alt="Checkmark" />
@@ -57,44 +83,26 @@ export default function TodayPage() {
     );
   }
 
-  function ToggleDone(habit, event) {
+  function toggleDone(habit, event) {
     const id = habit.id;
+    const action = habit.done ? "uncheck" : "check";
 
-    if (habit.done === true) {
-      event.preventDefault();
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
+    event.preventDefault();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
 
-      const promise = axios.post(
-        `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`,
-        {},
-        config
-      );
+    const promise = axios.post(
+      `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/${action}`,
+      {},
+      config
+    );
 
-      promise.catch((err) => {
-        console.log(err.response);
-      });
-    } else {
-      event.preventDefault();
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
-
-      const promise = axios.post(
-        `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`,
-        {},
-        config
-      );
-
-      promise.catch((err) => {
-        console.log(err.response);
-      });
-    }
+    promise.catch((err) => {
+      console.log(err.response);
+    });
   }
 }
 

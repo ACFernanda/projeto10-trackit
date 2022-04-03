@@ -1,40 +1,18 @@
 import React from "react";
-import { useState, useEffect, useContext } from "react";
-import axios from "axios";
+import { useContext } from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-import UserContext from "../Contexts/UserContext";
 import TodayHabitsContext from "../Contexts/TodayHabitsContext";
+import useUpdateHabits from "../Hooks/useUpdateHabits";
 
 export default function Footer() {
-  const user = useContext(UserContext);
-  const { todayHabits, setTodayHabits } = useContext(TodayHabitsContext);
+  const { todayHabits } = useContext(TodayHabitsContext);
 
-  useEffect(() => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    };
-
-    const promise = axios.get(
-      `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today`,
-      config
-    );
-
-    promise.then((response) => {
-      console.log(response.data);
-      setTodayHabits(response.data);
-    });
-
-    promise.catch((err) => {
-      console.log(err.response);
-    });
-  }, []);
+  // useUpdateHabits();
 
   const totalHabits = todayHabits.length;
   const doneHabits = todayHabits.filter((habit) => habit.done === true);

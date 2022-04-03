@@ -12,7 +12,6 @@ import TodayHabitsContext from "../Contexts/TodayHabitsContext";
 export default function App() {
   const [user, setUser] = useState(null);
   const [todayHabits, setTodayHabits] = useState([]);
-
   return (
     <TodayHabitsContext.Provider value={{ todayHabits, setTodayHabits }}>
       <UserContext.Provider value={user}>

@@ -21,13 +21,13 @@ export default function ListHabits({ habits, setHabits }) {
     );
 
     promise.then((response) => {
-      console.log(response.data);
       setHabits(response.data);
     });
 
     promise.catch((err) => {
       console.log(err.response);
     });
+    // eslint-disable-next-line
   }, []);
 
   if (habits.length > 0) {
