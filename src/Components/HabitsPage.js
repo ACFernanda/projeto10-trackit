@@ -5,6 +5,7 @@ import WeekDays from "./WeekDays";
 import styled from "styled-components";
 import { useContext, useState, useEffect } from "react";
 import axios from "axios";
+import { ThreeDots } from "react-loader-spinner";
 
 import UserContext from "../Contexts/UserContext";
 import TodayHabitsContext from "../Contexts/TodayHabitsContext";
@@ -63,6 +64,7 @@ export default function HabitsPage() {
   function NewHabit() {
     const [title, setTitle] = useState("");
     const [selectedDays, setSelectedDays] = useState([]);
+    const [disabled, setDisabled] = useState(false);
 
     function PostNewHabbit() {
       const config = {
@@ -94,6 +96,7 @@ export default function HabitsPage() {
     return (
       <AddHabit>
         <input
+          disabled={disabled}
           type="text"
           placeholder="nome do hábito"
           value={title}
@@ -109,6 +112,7 @@ export default function HabitsPage() {
           <button
             onClick={() => {
               setNewHabit(false);
+              setDisabled(true);
             }}
             className="cancel"
           >
@@ -121,7 +125,7 @@ export default function HabitsPage() {
             }}
             className="save"
           >
-            Salvar
+            {!disabled ? "Salvar" : <ThreeDots color="white" />}
           </button>
         </Submit>
       </AddHabit>
@@ -228,5 +232,8 @@ const Submit = styled.div`
     font-size: 16px;
     color: #ffffff;
     border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `;

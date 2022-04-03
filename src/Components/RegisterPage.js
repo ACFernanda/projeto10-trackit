@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { ThreeDots } from "react-loader-spinner";
 import styled from "styled-components";
 import axios from "axios";
 import logo from "../assets/img/Logo.svg";
@@ -72,7 +73,9 @@ export default function RegisterPage() {
           onChange={(e) => setPicture(e.target.value)}
           disabled={disabled}
         />
-        <button type="submit">Cadastrar</button>
+        <button onClick={() => setDisabled(true)} type="submit">
+          {!disabled ? "Cadastrar" : <ThreeDots color="white" />}
+        </button>
       </form>
 
       <Link to="/">
@@ -129,8 +132,10 @@ const Container = styled.div`
     border-radius: 4.63636px;
     font-size: 20.976px;
     line-height: 26px;
-    text-align: center;
     color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   button:disabled {
