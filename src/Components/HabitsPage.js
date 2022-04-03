@@ -1,11 +1,11 @@
+import { useContext, useState, useEffect } from "react";
+import { ThreeDots } from "react-loader-spinner";
+import styled from "styled-components";
+import axios from "axios";
 import Header from "./Header";
 import Footer from "./Footer";
 import ListHabits from "./ListHabits";
 import WeekDays from "./WeekDays";
-import styled from "styled-components";
-import { useContext, useState, useEffect } from "react";
-import axios from "axios";
-import { ThreeDots } from "react-loader-spinner";
 
 import UserContext from "../Contexts/UserContext";
 import TodayHabitsContext from "../Contexts/TodayHabitsContext";
