@@ -66,15 +66,22 @@ export default function TodayPage() {
   );
 
   function TodayHabit({ habit }) {
+    const [green, setGreen] = useState(false);
+
     return (
-      <TodayHabitCard key={habit.id}>
+      <TodayHabitCard key={habit.id} green={green}>
         <h1>{habit.name}</h1>
-        <p>Sequência atual: {habit.currentSequence}</p>
-        <p>Seu recorde: {habit.highestSequence}</p>
+        <p>
+          Sequência atual: <span>{habit.currentSequence}</span>
+        </p>
+        <p>
+          Seu recorde: <span>{habit.highestSequence}</span>
+        </p>
         <CheckBox
           done={habit.done}
           onClick={(event) => {
             toggleDone(habit, event);
+            setGreen(true);
           }}
         >
           <img src={checkmark} alt="Checkmark" />
@@ -152,6 +159,10 @@ const TodayHabitCard = styled.div`
     color: #666666;
     margin-left: 15px;
     line-height: 16px;
+
+    span {
+      color: ${({ green }) => (green ? "#8FC549" : "#666666")};
+    }
   }
 `;
 
