@@ -7,13 +7,9 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import TodayHabitsContext from "../Contexts/TodayHabitsContext";
-import useUpdateHabits from "../Hooks/useUpdateHabits";
 
 export default function Footer() {
   const { todayHabits } = useContext(TodayHabitsContext);
-
-  // useUpdateHabits();
-
   const totalHabits = todayHabits.length;
   const doneHabits = todayHabits.filter((habit) => habit.done === true);
   const percentageDone = (doneHabits.length * 100) / totalHabits;

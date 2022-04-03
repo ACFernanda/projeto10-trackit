@@ -5,7 +5,7 @@ import axios from "axios";
 
 import UserContext from "../Contexts/UserContext";
 
-export default function ListHabits({ habits, setHabits }) {
+export default function ListHabits({ habits, setHabits, setLastUpdate }) {
   const user = useContext(UserContext);
 
   useEffect(() => {
@@ -31,7 +31,14 @@ export default function ListHabits({ habits, setHabits }) {
   }, []);
 
   if (habits.length > 0) {
-    return <Habit habits={habits} token={user.token} setHabits={setHabits} />;
+    return (
+      <Habit
+        habits={habits}
+        token={user.token}
+        setHabits={setHabits}
+        setLastUpdate={setLastUpdate}
+      />
+    );
   } else {
     return (
       <NoHabit>
@@ -44,7 +51,7 @@ export default function ListHabits({ habits, setHabits }) {
   }
 }
 
-function Habit({ habits, token, setHabits }) {
+function Habit({ habits, token, setHabits, setLastUpdate }) {
   return habits.map(({ id, name, days }) => (
     <HabitCard key={id}>
       <p className="title">{name}</p>
@@ -52,7 +59,9 @@ function Habit({ habits, token, setHabits }) {
         <Days days={days} />
       </ListDays>
       <img
-        onClick={() => deleteHabit(id, token, setHabits, habits)}
+        onClick={() => {
+          deleteHabit(id, token, setHabits, habits, setLastUpdate);
+        }}
         src={trash}
         alt="delete"
       />
@@ -72,7 +81,7 @@ function Days({ days }) {
   });
 }
 
-function deleteHabit(id, token, setHabits, habits) {
+function deleteHabit(id, token, setHabits, habits, setLastUpdate) {
   const headers = {
     Authorization: `Bearer ${token}`,
   };
@@ -81,10 +90,12 @@ function deleteHabit(id, token, setHabits, habits) {
   const confirm = window.confirm("Deseja deletar o hábito?");
 
   if (confirm === true) {
-    axios.delete(
+    const promise = axios.delete(
       `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,
       { headers, data }
     );
+
+    promise.then(() => setLastUpdate(Date.now()));
 
     setHabits([...habits].filter((item) => item.id !== id));
   }

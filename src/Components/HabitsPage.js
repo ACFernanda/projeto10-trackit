@@ -3,16 +3,41 @@ import Footer from "./Footer";
 import ListHabits from "./ListHabits";
 import WeekDays from "./WeekDays";
 import styled from "styled-components";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 
 import UserContext from "../Contexts/UserContext";
+import TodayHabitsContext from "../Contexts/TodayHabitsContext";
 
 export default function HabitsPage() {
   const user = useContext(UserContext);
+  const { setTodayHabits } = useContext(TodayHabitsContext);
   const [newHabit, setNewHabit] = useState(false);
   const [habits, setHabits] = useState([]);
-  const [render, setRender] = useState(false);
+  const [lastUpdate, setLastUpdate] = useState(null);
+
+  useEffect(() => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+
+    const promise = axios.get(
+      `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today`,
+      config
+    );
+
+    promise.then((response) => {
+      console.log(response.data);
+      setTodayHabits(response.data);
+    });
+
+    promise.catch((err) => {
+      console.log(err.response);
+    });
+    // eslint-disable-next-line
+  }, [lastUpdate]);
 
   return (
     <>
@@ -25,7 +50,11 @@ export default function HabitsPage() {
           </Button>
         </Title>
         {newHabit === true ? <NewHabit /> : <></>}
-        <ListHabits setHabits={setHabits} habits={habits} />
+        <ListHabits
+          setHabits={setHabits}
+          habits={habits}
+          setLastUpdate={setLastUpdate}
+        />
       </Main>
       <Footer />
     </>
@@ -54,11 +83,11 @@ export default function HabitsPage() {
       promise.then((response) => {
         console.log(response.data);
         setHabits([...habits, response.data]);
+        setLastUpdate(Date.now());
       });
       promise.catch((err) => {
         console.log(err.response);
         alert("Erro! :( Tente novamente.");
-        // setDisabled(false);
       });
     }
 
@@ -89,7 +118,6 @@ export default function HabitsPage() {
             onClick={() => {
               PostNewHabbit();
               setNewHabit(false);
-              setRender(!render);
             }}
             className="save"
           >

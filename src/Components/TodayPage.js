@@ -42,6 +42,7 @@ export default function TodayPage() {
     promise.catch((err) => {
       console.log(err.response);
     });
+    // eslint-disable-next-line
   }, [lastUpdate]);
 
   return (
@@ -74,7 +75,6 @@ export default function TodayPage() {
           done={habit.done}
           onClick={(event) => {
             toggleDone(habit, event);
-            setLastUpdate(Date.now());
           }}
         >
           <img src={checkmark} alt="Checkmark" />
@@ -99,6 +99,8 @@ export default function TodayPage() {
       {},
       config
     );
+
+    promise.then(() => setLastUpdate(Date.now()));
 
     promise.catch((err) => {
       console.log(err.response);
